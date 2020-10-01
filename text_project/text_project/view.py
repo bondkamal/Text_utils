@@ -15,6 +15,7 @@ def analyze(request):
     fullcaps = request.GET.get('fullcaps', 'off')
     newlineremover = request.GET.get('newlineremover', 'off')
     extraspaceremover = request.GET.get('extraspaceremover', 'off')
+    lowercase = request.GET.get('lowercase','off')
 
     #Check which checkbox is on
     if removepunc == "on":
@@ -24,6 +25,10 @@ def analyze(request):
             if char not in punctuations:
                 analyzed = analyzed + char
         params = {'purpose':'Removed Punctuations', 'analyzed_text': analyzed}
+        return render(request, 'analyze.html', params)
+
+    elif lowercase == "on":
+        params = {"purpose": "Changed to Lowercase", "analyzed_text": djtext.lower()}
         return render(request, 'analyze.html', params)
 
     elif(fullcaps=="on"):
